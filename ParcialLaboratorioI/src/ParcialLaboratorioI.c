@@ -22,6 +22,7 @@ Contará con el siguiente menú:
 typedef struct{
 	int idContribuyente; //Comienza en 1000
 	int cuilContribuyente;
+	char nombre[20];
 	char apellido[20];
 	int isEmpty;
 }Contribuyente;
@@ -32,6 +33,7 @@ typedef struct{
 int inicializarContribuyentes(Contribuyente array[], int len);
 int buscarLibre(Contribuyente array[], int len, int* posicion);
 int contribuyente_alta(Contribuyente array[], int len, int* contadorID);
+int contribuyente_modificar(Contribuyente list[], int len,int id);
 
 
 int main(void) {
@@ -43,6 +45,8 @@ int main(void) {
 	int opcion = 0;
 	int auxContadorContribuyente=1000;
 	int respuesta;
+	int auxId = 0;
+
 
 	inicializarContribuyentes(array, LEN); //Inicializo los arrays en 1 (o sea disponibles para usar)
 
@@ -58,6 +62,7 @@ int main(void) {
 				contribuyente_alta(array, LEN, &auxContadorContribuyente);
 				break;
 			case 2:	//MODIFICAR CONTRIBUYENTE
+				contribuyente_modificar(array, LEN, auxId);
 				break;
 			case 3: //BAJAR CONTRIBUYENTE
 				break;
@@ -132,6 +137,7 @@ int contribuyente_alta(Contribuyente array[], int len, int* contadorID)
 {
 	int retorno = -1;
 	int posicion;
+
 	if(array != NULL && len > 0 && contadorID != NULL)
 	{
 		if(buscarLibre(array, len, &posicion)==-1)
@@ -142,13 +148,24 @@ int contribuyente_alta(Contribuyente array[], int len, int* contadorID)
 		{
 			(*contadorID)++;
 			array[posicion].idContribuyente=*contadorID;
-			printf("Ingrese N° de Cuil: \n");
 
-			scanf("%d", &array[posicion].cuilContribuyente);
+			printf("Ingrese N° ID: \n");
+			scanf("%d", &array[posicion].idContribuyente);
+
+			printf("Ingrese Nombre: \n");
+			scanf("%s", array[posicion].nombre);
+			fflush(stdin);
+
+
 			printf("Ingrese Apellido: \n");
 			scanf("%s", array[posicion].apellido);
+			fflush(stdin);
 
-			printf("Contribuyente guardado.");
+
+			printf("Ingrese N° de Cuil: \n");
+			scanf("%d", &array[posicion].cuilContribuyente);
+
+			printf("\nContribuyente guardado.");
 
 			retorno=0;
 		}
@@ -157,6 +174,78 @@ int contribuyente_alta(Contribuyente array[], int len, int* contadorID)
 	return retorno;
 }
 
+int contribuyente_modificar(Contribuyente array[], int len, int id)
+{
+	int i;
+	char answer='y';
+	int identificacion;
+	char auxNombre[20];
+	char auxApellido[20];
+	int auxCuil;
+	int retorno = -1;
+
+		printf("\nIngrese el ID del contribuyente a Modificar: \n");
+		scanf("%d", &identificacion);
+		fflush(stdin);
+
+		for(i=0; i < len;i++)
+		{
+
+			if(identificacion == array[i].idContribuyente)
+			{
+				printf("El empleado con el ID %d es: ", array[i].idContribuyente);
+				printf("%s ", array[i].nombre);
+				printf("%s.", array[i].apellido);
+				printf(" Su número de cuil es %d. \n", array[i].cuilContribuyente);
+				printf("Desea Modificar los datos? y/n\n");
+				scanf("%c", &answer);
+
+				if(answer == 'y' || answer == 'Y')
+					{
+					fflush(stdin);
+					printf("\nIngrese el nuevo nombre: \n");
+					scanf("%s", auxNombre);
+					fflush(stdin);
+					printf("\nIngrese el nuevo apellido: \n");
+					scanf("%s", auxApellido);
+					fflush(stdin);
+					printf("\nIngrese el nuevo número de cuil: \n");
+					scanf("%d", &auxCuil);
+					fflush(stdin);
+
+					fflush(stdin);
+
+
+					strcpy(array[i].nombre, auxNombre);
+					strcpy(array[i].apellido, auxApellido);
+					array[i].cuilContribuyente = auxCuil;
+
+					printf("\nEmpleado correctamente modificado.");
+					retorno = 1;
+
+					break;
+					}
+				else
+				{
+					if(answer == 'n' || answer == 'N')
+					{
+					fflush(stdin);
+					printf("\nOperación Cancelada.\n");
+					retorno = -1;
+					break;
+					}
+				}
+			}
+			else
+			{
+				printf("No se encontró el usuario.");
+				retorno = -1;
+				break;
+			}
+		}
+
+		return retorno;
+}
 
 
 
