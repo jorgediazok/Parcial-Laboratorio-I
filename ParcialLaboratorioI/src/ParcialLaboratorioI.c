@@ -13,9 +13,10 @@
 #include <string.h>
 #include "utn.h"
 
-
-
 int main(void) {
 	setbuf(stdout, NULL);
+
+	printf("Testeando");
+
 	return EXIT_SUCCESS;
 }
