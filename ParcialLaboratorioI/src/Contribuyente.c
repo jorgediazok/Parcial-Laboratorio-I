@@ -52,6 +52,8 @@ int buscarLibre(Contribuyente array[], int len, int* posicion)
 		return retorno;
 }
 
+
+
 //Alta
 
 int contribuyente_alta(Contribuyente array[], int len, int* contadorID)
@@ -233,4 +235,63 @@ void contribuyente_imprimir(Contribuyente array[], int len)
 	}
 }
 
+//CREAR RECAUDACION
 
+int recaudacion_alta(Recaudacion array[], int len, int* contadorIDRecaudacion)
+{
+	int retorno = -1;
+	int posicion=0;
+
+		if(array != NULL && len > 0 && contadorIDRecaudacion != NULL)
+		{
+
+				(*contadorIDRecaudacion)++;
+				array[posicion].idRecaudacion=*contadorIDRecaudacion;
+
+				printf("Ingrese N° ID: \n");
+				scanf("%d", &array[posicion].idRecaudacion);
+
+				printf("Ingrese Mes: \n");
+				scanf("%s", array[posicion].mes);
+				fflush(stdin);
+
+
+				printf("Ingrese tipo 1-ARBA 2-IIBB 3-GANANCIAS: \n");
+				scanf("%d", &array[posicion].tipo);
+				fflush(stdin);
+
+
+				printf("Ingrese Importe: \n");
+				scanf("%d", &array[posicion].importe);
+
+				array[posicion].isEmpty = 0;
+
+
+				printf("\nRecaudación guardada.");
+
+				retorno=0;
+			}
+
+
+		return retorno;
+}
+
+//IMPRIMIR RECAUDACION
+
+void recaudacion_imprimir(Recaudacion array[], int len)
+{
+	int i;
+	printf("\n|||RECAUDACION UTN|||\n");
+
+	for(i=0; i < len; i++)
+	{
+		if(array[i].isEmpty == 0)
+		{
+			printf("\nID: %d", array[i].idRecaudacion);
+			printf("\nMes: %s", array[i].mes);
+			printf("\nTipo: %d", array[i].tipo);
+			printf("\nImporte: %d \n", array[i].importe);
+		}
+
+	}
+}

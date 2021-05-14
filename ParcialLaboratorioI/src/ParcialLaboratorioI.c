@@ -20,7 +20,7 @@ Contará con el siguiente menú:
 #include "utn.h"
 #include "Contribuyente.h"
 
-#define LEN 2
+#define LEN 5
 
 
 int main(void) {
@@ -31,6 +31,7 @@ int main(void) {
 
 	int opcion = 0;
 	int auxContadorContribuyente=1000;
+	int auxContadorRecaudacion=100;
 	int respuesta;
 	int auxId = 0;
 
@@ -55,6 +56,7 @@ int main(void) {
 				contribuyente_baja(array, LEN);
 				break;
 			case 4: //RECAUDACION
+				recaudacion_alta(array, LEN, &auxContadorRecaudacion);
 				break;
 			case 5: //REFINANCIAR RECAUDACIÓN
 			    break;
@@ -64,6 +66,7 @@ int main(void) {
 				contribuyente_imprimir(array, LEN);
 				break;
 			case 8: //IMPRIMIR RECAUDACIÓN
+				recaudacion_imprimir(array, LEN);
 				break;
 			case 9:
 				printf("Saliste del sistema.");
